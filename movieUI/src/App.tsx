@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react'
 import api from './api/axiosConfig'
+import Layout from './components/Layout'
+import { Routes, Route } from 'react-router-dom'
+import Home from './components/home/Home'
 
 import './App.css'
 
@@ -10,7 +13,6 @@ function App() {
   const getMovies = async () => {
     try {
       const response = await api.get("api/v1/movies")
-      console.log(response.data)
       setMovies(response.data)
     } 
     catch(err) {
@@ -24,7 +26,13 @@ function App() {
 
   return (
     <>
-      <div className="app"></div>
+      <div className="app">
+        <Routes>
+          <Route path="/" element={<Layout/>}>
+            <Route index element={<Home movies={movies}/>} />
+          </Route>
+        </Routes>
+      </div>
     </>
   )
 }
